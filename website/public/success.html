@@ -1,0 +1,124 @@
+<div id="generated">
+    <h3> <xxx style="color: green;"> You are now under the inspection of the Debug Tracker </xxx> 
+        <br>
+        (<a target="_blank" href="{{ NAME }}"> <code>{{ NAME }}</code> </a>) 
+    </h3>
+    <h4> <quote> <u> Instructios </u> </quote> </h4>
+    <li> Open devtools and refresh the page again </li>
+    <li> The devtools debugger should break on the <code> debugger; </code> line of code </li>
+    <li> You may step in\out\over the different functions that follow this line of code </li>
+    <li> Once you've finished the debugging of the code, the flow of debugging you had will be presented to you </li>
+
+    <script>
+        function isMoreThanOnceInArr(e, arr) {
+            const index = arr.indexOf(e);
+            if (-1 === index) {
+                return false;
+            }
+            arr.splice(index, 1);
+            const index2 = arr.indexOf(e);
+            if (-1 === index2) {
+                return false;
+            }
+            return true;
+        }
+        function display() {
+            result.style.display = 'block';
+            const colors = ['green',
+                'blue', 'red', 
+                'blue', 'red', 
+                'blue', 'red'];
+            (function xxx() {
+                const color = colors.pop();
+                if (!color) return;
+                dtr.innerText = dtr.innerText.replace('🧾', '');
+                dtr.innerText = dtr.__change ? '🧾' + dtr.innerText : dtr.innerText + '🧾';
+                dtr.__change = !dtr.__change;
+                setTimeout(xxx, 1000);
+                result.style.outline = '3px solid ' + color + ';';
+                result.setAttribute('style', result.getAttribute('style') + '; outline: 3px solid ' + color + ';');
+            }())
+        }
+
+        function parseEntry(csEntry, asEntry) {
+            const item = csEntry;
+            const parts = item.split('-');
+            const lastTS = parts.pop();
+            const firstTS = parts.pop();
+            const fn = parts.join('-');
+            const args = asEntry;
+            return {firstTS, lastTS, fn, args};
+        }
+
+        let loop = 0;
+
+        function done() {
+            loop++;
+            const arr = [];
+            let empty = true;
+            const originalCallStack = [].slice.call(top._callstack);
+            const originalArgsStack = [].slice.call(top._argsstack);
+
+            let i;
+            for (i = 0; i < (top._callstack || []).length; i++) {
+                let timediff;
+                const {firstTS, lastTS, fn, args} = parseEntry(top._callstack[i], top._argsstack[i]);
+                const steppedOut = JSON.stringify(arr).indexOf(`${fn}-${firstTS}`) !== -1;
+                if (steppedOut) {
+                    timediff = lastTS - firstTS;
+                    document.querySelector(`#s-${loop}-${i-1}`).innerText = 'out';
+                    document.querySelector(`#q-${loop}-${i-1}`).innerText = (new Date(parseInt(lastTS))+'').split(' GMT')[0];
+                    document.querySelector(`#t-${loop}-${i-1}`).innerText = timediff + ' ms';
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td> ${fn} </td>
+                    <td id="s-${loop}-${i}"> in </td>
+                    <td> ${args} </td>
+                    <td id="q-${loop}-${i}"> ${(new Date(parseInt(firstTS))+'').split(' GMT')[0]} </td>
+                    <td id="t-${loop}-${i}"> </td>
+                `;
+
+                resultTable.appendChild(tr);
+                
+                if (empty) display();
+                empty = false;
+                
+                arr.push(top._callstack[i]);
+            }
+
+            if (i) {
+                let timediff;
+                const {firstTS, lastTS, fn, args} = parseEntry(top._callstack[i - 1], top._argsstack[i - 1]);
+                const steppedOut = JSON.stringify(arr).indexOf(`${fn}-${firstTS}`) !== -1;
+                if (steppedOut) {
+                    timediff = lastTS - firstTS;
+                    document.querySelector(`#s-${loop}-${i-1}`).innerText = 'out';
+                    document.querySelector(`#q-${loop}-${i-1}`).innerText = (new Date(parseInt(lastTS))+'').split(' GMT')[0];
+                    document.querySelector(`#t-${loop}-${i-1}`).innerText = timediff + ' ms';
+                }
+            }
+
+            if (!empty) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td> Async </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                `;
+                resultTable.appendChild(tr);
+            }
+
+            top._argsstack = [];
+            top._callstack = [];
+
+            setInterval(done, 1000);
+        }
+    </script>
+    <script>
+        {{ CODE }}
+    </script>
+</div>

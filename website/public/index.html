@@ -1,0 +1,70 @@
+<html style="font-size: 14; font-family: 'Courier', sans-serif;">
+    <head>
+        <title> Debug Tracker </title>
+        <link rel='icon' href='/favicon.ico' type='image/x-icon' />
+        <script>
+            if (navigator.userAgent.indexOf("Chrome") === -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+                alert('You have to use Chromium based browsers in order for this DEMO to work!')
+            }
+        </script>
+        <style>
+            th, td {
+                padding: 15px;
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            Debug Tracker DEMO 🕵️
+        </h1>
+        <h3> Instructions </h3> 
+        <p> 
+            Insert an 'https://' url of a javascript resource in the input field above and press Enter.
+            <br>
+            Once you provided a valid url, page will refresh and further instructions will be granted below.
+        </p>
+        
+        <form>
+            <input type="submit" value="Generate!">
+            <input type="url" id="urlInput" name="url" placeholder="insert an 'https://' url of a javascript resource here" style="width: 1000">
+        </form method="GET" action="/">
+        
+        <br>
+
+        <center>
+            <div style="width: 50%; padding: 20; display: none;" id="result">
+                <h1 id="dtr"> Debug Tracker Results 🧾</h1>
+                <h4> These are the functions you debugged (chronological ordered) </h4>
+                <table style="font-size: 25" border="1" id="resultTable">
+                    <tr>
+                        <th id="fn"> <div> 🧬 <br> Function </div> </th>
+                        <th id="type"> <div> 👣 <br> Stepped </div> </th>
+                        <th id="args"> <div> ⚙️ <br> Arguments </div> </th>
+                        <th id="ts"> <div> 📅 <br> Date </div> </th>
+                        <th id="tspent"> <div> ⏰ <br> Time </div> </th>
+                    </tr>
+                </table>
+                <p style="text-align: left; font-size: 80%;">
+                    👣 <b>Telling whether debug step was "in" or "out" is best effort only</b> since it makes it harder to tell that
+                    when the debug started inside the function without the action of actually stepping in (via breakpoint for example)
+                </p>
+            </div>
+        </center>
+        
+        <h5> You don't have to provide your own script - try anyone of these random scripts out! (these scripts are safe 🙏) </h5>
+        <li><a href="/?url=https://pastebin.com/raw/UbG5xbVf">callstack 5 depth example</a>  ✅ </li>
+        <li><a href="/?url=https://pastebin.com/raw/HneyhAqt">callstack recursive alternating values example</a>  ✅ </li>
+        <li><a href="/?url=https://pastebin.com/raw/xjw3gHvt">callstack recursive same values example</a>  ✅ </li>
+        <li><a href="/?url=https://pastebin.com/raw/TBcCLdX8">callstack async example</a>  ✅ </li>
+        <li><a href="/?url=https://pastebin.com/raw/AXJQAgpA">callstack program example</a>  ✅ </li>
+        <br><hr><br>
+        
+        <div id="container">
+            {{ DATA }}
+        </div>
+        <script>
+            urlInput.value = decodeURIComponent(location.href.split('url=')[1] || '');
+        </script>
+    </body>
+</html>
