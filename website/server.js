@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const readFile = require('util').promisify(fs.readFile);
-const track = require('../debug-tracker/index');
+const track = require('debug-tracker-poc');
 
 let errorContent;
 (async function(){

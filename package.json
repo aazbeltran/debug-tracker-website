@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/weizman/debug-tracker#readme",
   "dependencies": {
+    "debug-tracker-poc":  "1.0.0",
     "@babel/core": "^7.9.0",
     "@babel/parser": "^7.9.4",
     "@babel/traverse": "^7.9.5",
