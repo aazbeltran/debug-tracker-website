@@ -1,6 +1,6 @@
 <html style="font-size: 14; font-family: 'Courier', sans-serif;">
     <head>
-        <title> Debug Tracker </title>
+        <title> Debug Tracker POC </title>
         <link rel='icon' href='/favicon.ico' type='image/x-icon' />
         <script>
             if (navigator.userAgent.indexOf("Chrome") === -1 || navigator.userAgent.indexOf("Edge") !== -1) {
@@ -16,20 +16,25 @@
     </head>
     <body>
         <h1>
-            Debug Tracker DEMO 🕵️
+            Debug Tracker POC DEMO 🕵️
         </h1>
         <h3> Instructions </h3> 
         <p> 
-            Insert an 'https://' url of a javascript resource in the input field above and press Enter.
-            <br>
-            Once you provided a valid url, page will refresh and further instructions will be granted below.
+            Pick anyone of the examples below. Once you did, page will refresh and further instructions will be granted below.
         </p>
+
+        <li><a href="/?url=https://pastebin.com/raw/UbG5xbVf">callstack 5 depth example</a>  ✅ </li>
+        <li><a href="/?url=https://pastebin.com/raw/HneyhAqt">callstack recursive alternating values example</a>  ✅ </li>
+        <li><a href="/?url=https://pastebin.com/raw/xjw3gHvt">callstack recursive same values example</a>  ✅ </li>
+        <li><a href="/?url=https://pastebin.com/raw/TBcCLdX8">callstack async example</a>  ✅ </li>
+        <li><a href="/?url=https://pastebin.com/raw/AXJQAgpA">callstack program example</a>  ✅ </li>
+        <br><br>
         
         <form>
             <input type="submit" value="Generate!">
             <input type="url" id="urlInput" name="url" placeholder="insert an 'https://' url of a javascript resource here" style="width: 1000">
         </form method="GET" action="/">
-        
+
         <br>
 
         <center>
@@ -51,14 +56,6 @@
                 </p>
             </div>
         </center>
-        
-        <h5> You don't have to provide your own script - try anyone of these random scripts out! (these scripts are safe 🙏) </h5>
-        <li><a href="/?url=https://pastebin.com/raw/UbG5xbVf">callstack 5 depth example</a>  ✅ </li>
-        <li><a href="/?url=https://pastebin.com/raw/HneyhAqt">callstack recursive alternating values example</a>  ✅ </li>
-        <li><a href="/?url=https://pastebin.com/raw/xjw3gHvt">callstack recursive same values example</a>  ✅ </li>
-        <li><a href="/?url=https://pastebin.com/raw/TBcCLdX8">callstack async example</a>  ✅ </li>
-        <li><a href="/?url=https://pastebin.com/raw/AXJQAgpA">callstack program example</a>  ✅ </li>
-        <br><hr><br>
         
         <div id="container">
             {{ DATA }}

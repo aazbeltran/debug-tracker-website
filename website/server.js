@@ -107,7 +107,7 @@ done();
 }
 
 const server = express();
-const port = 8080;
+const port = 8081;
 
 server.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'favicon.png'));
